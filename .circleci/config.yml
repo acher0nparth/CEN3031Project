@@ -17,6 +17,13 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+  db-test:
+
+    executor: my-custom-executor
+    steps:
+      - checkout
+      - run: |
+          # pytest -v
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -24,3 +31,5 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
+      - db_test
+    
