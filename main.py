@@ -1,5 +1,4 @@
 import tkinter as tk
-from turtle import clear
 import markdown as md
 from tkhtmlview import HTMLLabel
 
