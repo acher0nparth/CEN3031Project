@@ -1,6 +1,6 @@
-#https://levelup.gitconnected.com/build-a-note-taking-app-with-mysql-backend-in-python-927b4c5fad91
-#https://realpython.com/python-mysql/
-#tutorials cited for following on how to setup a mysql server
+# https://levelup.gitconnected.com/build-a-note-taking-app-with-mysql-backend-in-python-927b4c5fad91
+# https://realpython.com/python-mysql/
+# tutorials cited for following on how to setup a mysql server
 
 import mysql.connector as conn
 from getpass import getpass
@@ -11,6 +11,7 @@ from mysql.connector import connect, Error
 global connection
 connection = conn.connect(host="localhost", port=3306, user="root", password="flashify")
 
+
 def db_create_db(connection):
     mycursor = connection.cursor()
     mycursor.execute("CREATE DATABASE IF NOT EXISTS sprint1_rev_db")
@@ -19,14 +20,18 @@ def db_create_db(connection):
     print(connection)
     return connection.database
 
+
 def db_create_table(connection):
     mycursor = connection.cursor()
-    query = "CREATE TABLE IF NOT EXISTS notes_tb (" \
-          "note_id INT AUTO_INCREMENT PRIMARY KEY, " \
-          "title VARCHAR(255) NOT NULL, " \
-          "note VARCHAR(10000) NOT NULL)"
+    query = (
+        "CREATE TABLE IF NOT EXISTS notes_tb ("
+        "note_id INT AUTO_INCREMENT PRIMARY KEY, "
+        "title VARCHAR(255) NOT NULL, "
+        "note VARCHAR(10000) NOT NULL)"
+    )
     mycursor.execute(query)
     connection.commit()
+
 
 def db_insert(connection, title, note):
     mycursor = connection.cursor()
@@ -34,16 +39,19 @@ def db_insert(connection, title, note):
     mycursor.execute(query, (title, note))
     connection.commit()
 
+
 def db_get_all_notes(connection):
     query = "SELECT * from notes_tb"
     mycursor = connection.cursor()
     mycursor.execute(query)
     return mycursor.fetchall()
 
+
 def db_get_note(connection, note_id):
     mycursor = connection.cursor()
     mycursor.execute("SELECT title, note FROM notes_tb WHERE note_id = " + str(note_id))
     return mycursor.fetchone()
+
 
 def db_update_note(connection, title, note, note_id):
     mycursor = connection.cursor()
@@ -52,18 +60,16 @@ def db_update_note(connection, title, note, note_id):
     mycursor.execute(query, val)
     connection.commit()
 
+
 def db_delete_note(connection, note_id):
     mycursor = connection.cursor()
     query = "DELETE FROM notes_tb WHERE note_id = %s"
     adr = (note_id,)
     mycursor.execute(query, adr)
-    connection.commit()   
+    connection.commit()
 
 
-note_ex = [
-    ('Note1 title', 'testing note 1'),
-    ('Note2 title', 'testing note 2')
-]
+note_ex = [("Note1 title", "testing note 1"), ("Note2 title", "testing note 2")]
 
 db_create_db(connection)
 db_create_table(connection)
@@ -78,7 +84,7 @@ for note in notes_ret:
 one_note = db_get_note(connection, 3)
 print(one_note)
 
-db_update_note(connection, "Note 1 updated", "testing updating my first note", '3')
+db_update_note(connection, "Note 1 updated", "testing updating my first note", "3")
 one_note = db_get_note(connection, 3)
 print(one_note)
 
@@ -104,7 +110,6 @@ print(one_note)
 #             cursor.execute(create_db_query)
 # except Error as e:
 #     print(e)
-
 
 
 # try:
