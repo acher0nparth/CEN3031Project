@@ -13,26 +13,24 @@ class Window(tk.Tk):
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
         )
 
-        # add landing screen
-
+        #landing screen
+        #initialize grid
         for i in range(4):
             self.columnconfigure(i, weight=1)
 
         for i in range(30):
             self.rowconfigure(i, weight=1)
 
-
+        #add various labels
         title_label = tk.Label(
             self, text="Flashify", font=("Times New Roman", 90, "bold italic")
         )
         title_label.grid(row=2, column=2, sticky=tk.W)
-        # title_label.pack(fill=tk.X, pady=10)
 
         title_subheading_label = tk.Label(
             self, text="# a markdown-based study tool", font=("Courier New", 15, "italic")
         )
         title_subheading_label.grid(row=3, column=2, sticky=tk.W, pady=8, padx=5)
-        # title_subheading_label.pack(fill=tk.X, pady=10)
 
         note_heading_label = tk.Label(
             self, text="notes", font=("Courier New", 15, "underline")
@@ -69,20 +67,8 @@ class Window(tk.Tk):
         flashcard_body_label1.grid(row=11, column=2, sticky=tk.W, pady=2)
         flashcard_body_label2.grid(row=12, column=2, sticky=tk.W, pady=5)
 
-        # image1 = tk.PhotoImage(file='gator_head.png')
-        # self.create_image(10,10,anchor=tk.NW,image=image1)
-        # image_label = tk.Label(image=image1)
-        # image_label.grid(row=1, column=1)
-
-        """
-        canvas = tk.Canvas(self, width=600, height=400)
-        canvas.grid(row=1, column=2)
-
-        image1=(tk.Image.open('gator_head.png'))
-        resized_image=image1.resize((100,100), tk.Image.ANTIALIAS)
-        new_image = tk.ImageTk.PhotoImage(resized_image)
-        canvas.create_image(10,10, anchor=tk.NW, image=resized_image)
-        """
+        # experiment with adding images (for landing screen logo (?) and adding pics to notes)
+        # maybe use PIL library for adding images
 
         # adding a little menu on top
         self.menubar = tk.Menu(self)
