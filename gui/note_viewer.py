@@ -1,8 +1,10 @@
 from tkhtmlview import HTMLLabel
+import gui.gui as gui
 import gui.text_editor as te
 import tkinter as tk
 
 # self.html_area = HTMLLabel(self, html=html)
+
 
 class note_viewer(tk.Tk):
     def __init__(self):
@@ -25,6 +27,9 @@ class note_viewer(tk.Tk):
         self.editmenu = tk.Menu(self.menubar, tearoff=0)
         self.editmenu.add_command(label="Edit Notes", command=self.edit_note)
         self.menubar.add_cascade(label="Edit", menu=self.editmenu)
+        self.viewmenu = tk.Menu(self.menubar, tearoff=0)
+        self.viewmenu.add_command(label="View Courses", command=self.view_course_list)
+        self.menubar.add_cascade(label="View", menu=self.viewmenu)
 
         self.config(menu=self.menubar)
 
@@ -37,3 +42,8 @@ class note_viewer(tk.Tk):
         """open current note as editable text"""
         self.destroy()
         self = te.text_editor().insert_text(text=self.html)
+
+    def view_course_list(self):
+        """view courses on main page"""
+        self.destroy()
+        self = gui.Window()

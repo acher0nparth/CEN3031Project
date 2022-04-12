@@ -1,6 +1,7 @@
 from cgitb import text
 import tkinter as tk
 import markdown as md
+import gui.gui as gui
 import gui.note_viewer as nv
 
 
@@ -33,6 +34,9 @@ class text_editor(tk.Tk):
         self.viewmenu.add_command(
             label="View Other Notes", command=self.popup_dialog_view_other
         )
+        self.viewmenu.add_command(
+            label="View Courses", command=self.popup_dialog_view_course_list
+        )
         self.menubar.add_cascade(label="View", menu=self.viewmenu)
         self.config(menu=self.menubar)
 
@@ -58,6 +62,14 @@ class text_editor(tk.Tk):
         self.popup.destroy()
         self.destroy()
         self = nv.note_viewer()
+
+    def view_courses(self):
+        # saving work before moving on
+        self.save_note()
+        # add pop up window to choose course/subject
+        self.popup.destroy()
+        self.destroy()
+        self = gui.Window()
 
     def popup_dialog_exit(self):
         self.popup = tk.Toplevel(self)
@@ -109,6 +121,25 @@ class text_editor(tk.Tk):
         )
         continue_work.pack(side=tk.RIGHT)
 
+    def popup_dialog_view_course_list(self):
+        self.popup = tk.Toplevel(self)
+        warning = tk.Label(
+            self.popup,
+            text="You are about to exit the note taker. Please save your work.",
+        )
+        warning.pack(side=tk.TOP)
+        save_exit = tk.Button(
+            self.popup,
+            text="Save Current Note and View Courses",
+            command=self.view_courses,
+        )
+        save_exit.pack(side=tk.LEFT)
+        continue_work = tk.Button(
+            self.popup, text="Continue Working", command=self.popup.destroy
+        )
+        continue_work.pack(side=tk.RIGHT)
+
+    
     def save_note(self):
         text = self.text_entry.get("1.0", "end")
         html = md.markdown(text)
