@@ -7,9 +7,12 @@ import tkinter as tk
 
 
 class note_viewer(tk.Tk):
-    def __init__(self):
+    def __init__(self, course, note):
         # add arguments so it knows what to load from database
         super().__init__()
+
+        self.course = course
+        self.note = note
 
         self.title("Flashify Note Viewer")
         self.geometry(
@@ -17,7 +20,8 @@ class note_viewer(tk.Tk):
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
         )
 
-        # load this in from database later
+        # load this specific note from the database using the passed in "note" string in html form
+
         self.html = "ha ha html goes here"
 
         self.menubar = tk.Menu(self)
@@ -40,8 +44,11 @@ class note_viewer(tk.Tk):
 
     def edit_note(self):
         """open current note as editable text"""
+        # removed "insert_text" function
+        course = self.course
+        note = self.note
         self.destroy()
-        self = te.text_editor().insert_text(text=self.html)
+        self = te.text_editor(course, note)
 
     def view_course_list(self):
         """view courses on main page"""

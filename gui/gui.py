@@ -1,5 +1,6 @@
 import gui.text_editor as te
 import gui.note_viewer as nv
+import gui.course_viewer as cv
 import tkinter as tk
 
 
@@ -92,23 +93,8 @@ class Window(tk.Tk):
         self.menubar = tk.Menu(self)
         self.filemenu = tk.Menu(self.menubar, tearoff=0)
         self.filemenu.add_command(label="Exit", command=self.quit)
-        self.filemenu.add_command(label="Take Notes", command=self.take_notes)
         self.menubar.add_cascade(label="File", menu=self.filemenu)
-        self.viewmenu = tk.Menu(self.menubar, tearoff=0)
-        self.viewmenu.add_command(label="View Notes", command=self.view_notes)
-        self.menubar.add_cascade(label="View", menu=self.viewmenu)
         self.config(menu=self.menubar)
-
-
-    def take_notes(self):
-        self.destroy()
-        self = te.text_editor()
-
-    def view_notes(self):
-        """add functionality after database api is done"""
-        # add pop up window to choose course/subject
-        self.destroy()
-        self = nv.note_viewer()
 
     def create_course(self):
         """create course"""
@@ -147,12 +133,10 @@ class Window(tk.Tk):
 
     def view_course(self):
         """open specified course viewer"""
-        # to get selected item: self.list_box.get(tk.ANCHOR)
-
-        # self.destroy
-
-        # add new 'course' class to view notes and flashcards in tk.Listbox's
-        # this should be a new window with that respective course's notes and flashcards
-        # will have same menubar functionality
-
-        # buttons to view/edit selected course note/flashcard
+        # this will open a blank page if no course is selected (bug)
+      
+        course_n = self.list_box.get(tk.ANCHOR)
+        self.destroy()
+        self = cv.course_viewer(course_n)
+     
+       

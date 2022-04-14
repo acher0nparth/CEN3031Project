@@ -6,14 +6,19 @@ import gui.note_viewer as nv
 
 
 class text_editor(tk.Tk):
-    def __init__(self):
+    def __init__(self, course, note):
         super().__init__()
+
+        self.course = course
+        self.note = note
 
         self.title("Flashify Text Editor")
         self.geometry(
             "%dx%d+0+0"
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
         )
+
+        # load this specific note from the database using the passed in "note" string
 
         # text entry widget
         self.text_entry = tk.scrolledtext.ScrolledText(
@@ -53,7 +58,7 @@ class text_editor(tk.Tk):
         # saving text as html
         # save html to database, destroy this window, initialize self as note viewer window
         self.destroy()
-        self = nv.note_viewer()
+        self = nv.note_viewer(self.course, self.note)
 
     def view_other_note(self):
         # saving work before moving on
@@ -61,7 +66,7 @@ class text_editor(tk.Tk):
         # add pop up window to choose course/subject
         self.popup.destroy()
         self.destroy()
-        self = nv.note_viewer()
+        self = nv.note_viewer(self.course, self.note)
 
     def view_courses(self):
         # saving work before moving on
