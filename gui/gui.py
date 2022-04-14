@@ -13,92 +13,77 @@ class Window(tk.Tk):
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
         )
 
-        #landing screen
-        #initialize grid
+        # landing screen
+        # initialize grid
         for i in range(4):
             self.columnconfigure(i, weight=1)
 
         for i in range(30):
             self.rowconfigure(i, weight=1)
 
-        #add various labels
+        # add various labels
         title_label = tk.Label(
             self, text="Flashify", font=("Times New Roman", 90, "bold italic")
         )
         title_label.grid(row=2, column=1, columnspan=2)
 
         title_subheading_label = tk.Label(
-            self, text="# a markdown-based study tool", font=("Courier New", 15, "italic")
+            self,
+            text="# a markdown-based study tool",
+            font=("Courier New", 15, "italic"),
         )
         title_subheading_label.grid(row=3, column=1, columnspan=2, pady=8, padx=5)
 
-        '''
-        note_heading_label = tk.Label(
-            self, text="notes", font=("Courier New", 15, "underline")
+        self.course_heading_label = tk.Label(
+            self, text="Courses", font=("Courier New", 15, "underline")
         )
-        note_heading_label.grid(row=6, column=1, columnspan=2, pady=4)
-
-        note_body_label1 = tk.Label(
-            self,
-            text="To take notes, navigate to File >> Take Notes",
-            font=("Courier New", 10),
-        )
-        note_body_label2 = tk.Label(
-            self,
-            text="To take view notes, navigate to View >> View Notes",
-            font=("Courier New", 10),
-        )
-        note_body_label1.grid(row=7, column=1, columnspan=2, pady=2)
-        note_body_label2.grid(row=8, column=1, columnspan=2, pady=5)
-
-        flashcard_heading_label = tk.Label(
-            self, text="flashcards", font=("Courier New", 15, "underline")
-        )
-        flashcard_heading_label.grid(row=10, column=1, columnspan=2, pady=4)
-        flashcard_body_label1 = tk.Label(
-            self,
-            text="To create flashcards, navigate to File >> Create Flashcards",
-            font=("Courier New", 10),
-        )
-        flashcard_body_label2 = tk.Label(
-            self,
-            text="To take view flashcards, navigate to View >> View Flashcards",
-            font=("Courier New", 10),
-        )
-        flashcard_body_label1.grid(row=11, column=1, columnspan=2, pady=2)
-        flashcard_body_label2.grid(row=12, column=1, columnspan=2, pady=5)
-        '''
-
-        self.course_heading_label = tk.Label(self, text="Courses", font=("Courier New", 15, "underline"))
         self.course_heading_label.grid(row=6, column=1, columnspan=2, pady=4)
-        
 
-        #list box
+
+        # list box
         self.frame = tk.Frame(self)
         self.frame.grid(row=7, column=1, columnspan=2, pady=5)
         self.scrollbar = tk.Scrollbar(self.frame, orient=tk.VERTICAL)
         self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        self.list_box = tk.Listbox(self.frame, width=50, yscrollcommand=self.scrollbar.set, font=("Courier New", 10))
+        self.list_box = tk.Listbox(
+            self.frame,
+            width=50,
+            yscrollcommand=self.scrollbar.set,
+            font=("Courier New", 10),
+        )
         self.list_box.pack(expand=True, fill=tk.Y)
         self.scrollbar.config(command=self.list_box.yview)
 
-        #populate list_box with courses from database:
-        #not sure how this works quite yet
-        #"for courses in database:
-            #self.list_box.insert(tk.END, course)"
+        # populate list_box with courses from database:
+        # not sure how this works quite yet
+        # "for courses in database:
+        #     self.list_box.insert(tk.END, course)"
 
 
-        self.create_course_button = tk.Button(self, text="Create New Course",  height=1, width= 15,command=self.create_course)
-        self.create_course_button.grid(row=8,column=1,pady=5)     
+        #list box buttons
+        self.create_course_button = tk.Button(
+            self,
+            text="Create New Course",
+            height=1,
+            width=15,
+            command=self.create_course,
+        )
+        self.create_course_button.grid(row=8, column=1, pady=5)
 
-        self.view_course_button = tk.Button(self,text="View Course", height=1, width= 15,command=self.view_course)
-        self.view_course_button.grid(row=8, column=2,pady=5)
-        #add functionality to select course from list
+        self.view_course_button = tk.Button(
+            self, text="View Course", height=1, width=15, command=self.view_course
+        )
+        self.view_course_button.grid(row=8, column=2, pady=5)
+        # add functionality to select course from list
 
-        self.course_body_label = tk.Label(self, text="Select from the course list above to", font=("Courier New", 15))
+        self.course_body_label = tk.Label(
+            self, text="Select from the course list above to", font=("Courier New", 15)
+        )
         self.course_body_label.grid(row=15, column=1, columnspan=2)
 
-        self.course_body_label = tk.Label(self, text="edit/view materials in that course", font=("Courier New", 15))
+        self.course_body_label = tk.Label(
+            self, text="edit/view materials in that course", font=("Courier New", 15)
+        )
         self.course_body_label.grid(row=16, column=1, columnspan=2)
 
 
@@ -113,6 +98,7 @@ class Window(tk.Tk):
         self.viewmenu.add_command(label="View Notes", command=self.view_notes)
         self.menubar.add_cascade(label="View", menu=self.viewmenu)
         self.config(menu=self.menubar)
+
 
     def take_notes(self):
         self.destroy()
@@ -133,43 +119,40 @@ class Window(tk.Tk):
         )
         naming_label.pack(side=tk.TOP)
 
-        self.course_name = tk.Text(self.popup, height=1, width=20,font=("Courier New", 10))
+        self.course_name = tk.Text(
+            self.popup, height=1, width=20, font=("Courier New", 10)
+        )
         self.course_name.pack(side=tk.TOP, pady=4)
-        #add option to type course name
+        # add option to type course name
 
         create_button = tk.Button(
             self.popup,
             text="Create course",
             command=self.add_to_list,
         )
-        #create--> add_to_list(variable)
+        # create--> add_to_list(variable)
         create_button.pack(side=tk.LEFT)
-        cancel_button = tk.Button(
-            self.popup, text="Cancel", command=self.popup.destroy
-        )
+        cancel_button = tk.Button(self.popup, text="Cancel", command=self.popup.destroy)
         cancel_button.pack(side=tk.RIGHT)
 
     def add_to_list(self):
         """add specified course to course list"""
-        
-        #add course to database
 
-        #this is necessary to show newly added courses while still in window:
+        # add course to database
+
+        # this is necessary to show newly added courses while still in window:
         self.list_box.insert(tk.END, self.course_name.get(1.0, tk.END))
 
         self.popup.destroy()
 
-
-    def view_course(self, specified_course):
+    def view_course(self):
         """open specified course viewer"""
-        #add new 'course' class to view notes and flashcards in tk.Listbox's
-            #this should be a new window with that respective course's notes and flashcards
-            #will have same menubar functionality
+        # to get selected item: self.list_box.get(tk.ANCHOR)
 
-            #buttons to view/edit selected course note/flashcard
+        # self.destroy
 
+        # add new 'course' class to view notes and flashcards in tk.Listbox's
+        # this should be a new window with that respective course's notes and flashcards
+        # will have same menubar functionality
 
-
-
-
-
+        # buttons to view/edit selected course note/flashcard
