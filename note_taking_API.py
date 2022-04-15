@@ -14,9 +14,9 @@ connection = conn.connect(host="localhost", port=3306, user="root", password="fl
 
 def db_create_db(connection):
     mycursor = connection.cursor()
-    mycursor.execute("CREATE DATABASE IF NOT EXISTS sprint1_rev_db")
+    mycursor.execute("CREATE DATABASE IF NOT EXISTS testing_db")
     print(connection)
-    connection.database = "sprint1_rev_db"
+    connection.database = "testing_db"
     print(connection)
     return connection.database
 
@@ -46,10 +46,20 @@ def db_get_all_notes(connection):
     mycursor.execute(query)
     return mycursor.fetchall()
 
+def db_get_all_titles(connection):
+    query = "SELECT title from notes_tb"
+    mycursor = connection.cursor()
+    mycursor.execute(query)
+    return mycursor.fetchall()
 
 def db_get_note(connection, note_id):
     mycursor = connection.cursor()
     mycursor.execute("SELECT title, note FROM notes_tb WHERE note_id = " + str(note_id))
+    return mycursor.fetchone()
+
+def db_get_note_t(connection, title):
+    mycursor = connection.cursor()
+    mycursor.execute("SELECT note FROM notes_tb WHERE title = '" + title + "'")
     return mycursor.fetchone()
 
 
@@ -69,24 +79,24 @@ def db_delete_note(connection, note_id):
     connection.commit()
 
 
-note_ex = [("Note1 title", "testing note 1"), ("Note2 title", "testing note 2")]
+# note_ex = [("Note1 title", "testing note 1"), ("Note2 title", "testing note 2")]
 
-db_create_db(connection)
-db_create_table(connection)
+# db_create_db(connection)
+# db_create_table(connection)
 
-for note in note_ex:
-    db_insert(connection, note[0], note[1])
+# for note in note_ex:
+#     db_insert(connection, note[0], note[1])
 
-notes_ret = db_get_all_notes(connection)
-for note in notes_ret:
-    print(note)
+# notes_ret = db_get_all_notes(connection)
+# for note in notes_ret:
+#     print(note)
 
-one_note = db_get_note(connection, 3)
-print(one_note)
+# one_note = db_get_note(connection, 3)
+# print(one_note)
 
-db_update_note(connection, "Note 1 updated", "testing updating my first note", "3")
-one_note = db_get_note(connection, 3)
-print(one_note)
+# db_update_note(connection, "Note 1 updated", "testing updating my first note", "3")
+# one_note = db_get_note(connection, 3)
+# print(one_note)
 
 # db_delete_note(connection, 1)
 # db_delete_note(connection, 2)
