@@ -2,19 +2,25 @@ from cgitb import text
 from ehp import *
 import tkinter as tk
 import markdown as md
+import gui.gui as gui
 import gui.note_viewer as nv
 from note_taking_API import *
 
 
 class text_editor(tk.Tk):
-    def __init__(self):
+    def __init__(self, course, note):
         super().__init__()
+
+        self.course = course
+        self.note = note
 
         self.title("Flashify Text Editor")
         self.geometry(
             "%dx%d+0+0"
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
         )
+
+        # load this specific note from the database using the passed in "note" string
 
         # text entry widget
         self.text_entry = tk.scrolledtext.ScrolledText(
@@ -35,6 +41,9 @@ class text_editor(tk.Tk):
         self.viewmenu.add_command(
             label="View Other Notes", command=self.popup_dialog_view_other
         )
+        self.viewmenu.add_command(
+            label="View Courses", command=self.popup_dialog_view_course_list
+        )
         self.menubar.add_cascade(label="View", menu=self.viewmenu)
         self.config(menu=self.menubar)
 
@@ -51,7 +60,7 @@ class text_editor(tk.Tk):
         # saving text as html
         # save html to database, destroy this window, initialize self as note viewer window
         self.destroy()
-        self = nv.note_viewer()
+        self = nv.note_viewer(self.course, self.note)
 
     def view_other_note(self):
         # saving work before moving on
@@ -59,7 +68,15 @@ class text_editor(tk.Tk):
         # add pop up window to choose course/subject
         self.popup.destroy()
         self.destroy()
-        self = nv.note_viewer()
+        self = nv.note_viewer(self.course, self.note)
+
+    def view_courses(self):
+        # saving work before moving on
+        self.save_note()
+        # add pop up window to choose course/subject
+        self.popup.destroy()
+        self.destroy()
+        self = gui.Window()
 
     def popup_dialog_exit(self):
         self.popup = tk.Toplevel(self)
@@ -111,6 +128,25 @@ class text_editor(tk.Tk):
         )
         continue_work.pack(side=tk.RIGHT)
 
+    def popup_dialog_view_course_list(self):
+        self.popup = tk.Toplevel(self)
+        warning = tk.Label(
+            self.popup,
+            text="You are about to exit the note taker. Please save your work.",
+        )
+        warning.pack(side=tk.TOP)
+        save_exit = tk.Button(
+            self.popup,
+            text="Save Current Note and View Courses",
+            command=self.view_courses,
+        )
+        save_exit.pack(side=tk.LEFT)
+        continue_work = tk.Button(
+            self.popup, text="Continue Working", command=self.popup.destroy
+        )
+        continue_work.pack(side=tk.RIGHT)
+
+    
     def save_note(self):
         text = self.text_entry.get("1.0", "end")
         html = md.markdown(text)
