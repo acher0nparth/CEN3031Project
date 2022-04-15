@@ -1,4 +1,5 @@
 from tkhtmlview import HTMLLabel
+import gui.gui as gui
 import gui.text_editor as te
 import tkinter as tk
 from note_taking_API import *
@@ -6,10 +7,14 @@ import copy
 
 
 
+
 class note_viewer(tk.Tk):
-    def __init__(self):
+    def __init__(self, course, note):
         # add arguments so it knows what to load from database
         super().__init__()
+
+        self.course = course
+        self.note = note
 
         self.title("Flashify Note Viewer")
         self.geometry(
@@ -18,7 +23,11 @@ class note_viewer(tk.Tk):
         )
         self.html_area = HTMLLabel(self, html='')
 
-        # load this in from database later        
+
+        # load this specific note from the database using the passed in "note" string in html form
+
+        self.html = ""       
+
         self.menubar = tk.Menu(self)
         self.filemenu = tk.Menu(self.menubar, tearoff=0)
         self.filemenu.add_command(label="Exit", command=self.quit)
@@ -26,6 +35,10 @@ class note_viewer(tk.Tk):
         self.editmenu = tk.Menu(self.menubar, tearoff=0)
         self.editmenu.add_command(label="Edit Notes", command=self.edit_note)
         self.menubar.add_cascade(label="Edit", menu=self.editmenu)
+
+        self.viewmenu = tk.Menu(self.menubar, tearoff=0)
+        self.viewmenu.add_command(label="View Courses", command=self.view_course_list)
+        self.menubar.add_cascade(label="View", menu=self.viewmenu)
         
         titles = self.display_titles()
         self.notemenu = tk.Menu(self.menubar, tearoff=0)
@@ -59,5 +72,13 @@ class note_viewer(tk.Tk):
 
     def edit_note(self):
         """open current note as editable text"""
+        # removed "insert_text" function
+        course = self.course
+        note = self.note
         self.destroy()
-        self = te.text_editor().insert_text(text=self.html)
+        self = te.text_editor(course, note)
+
+    def view_course_list(self):
+        """view courses on main page"""
+        self.destroy()
+        self = gui.Window()
