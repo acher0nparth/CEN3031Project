@@ -1,5 +1,4 @@
 from cgitb import text
-from pyquery import PyQuery
 from ehp import *
 import tkinter as tk
 import markdown as md
