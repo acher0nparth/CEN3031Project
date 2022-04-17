@@ -46,16 +46,19 @@ def db_get_all_notes(connection):
     mycursor.execute(query)
     return mycursor.fetchall()
 
+
 def db_get_all_titles(connection):
     query = "SELECT title from notes_tb"
     mycursor = connection.cursor()
     mycursor.execute(query)
     return mycursor.fetchall()
 
+
 def db_get_note(connection, note_id):
     mycursor = connection.cursor()
     mycursor.execute("SELECT title, note FROM notes_tb WHERE note_id = " + str(note_id))
     return mycursor.fetchone()
+
 
 def db_get_note_t(connection, title):
     mycursor = connection.cursor()

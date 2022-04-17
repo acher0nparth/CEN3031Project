@@ -40,7 +40,6 @@ class Window(tk.Tk):
         )
         self.course_heading_label.grid(row=6, column=1, columnspan=2, pady=4)
 
-
         # list box
         self.frame = tk.Frame(self)
         self.frame.grid(row=7, column=1, columnspan=2, pady=5)
@@ -60,8 +59,7 @@ class Window(tk.Tk):
         # "for courses in database:
         #     self.list_box.insert(tk.END, course)"
 
-
-        #list box buttons
+        # list box buttons
         self.create_course_button = tk.Button(
             self,
             text="Create New Course",
@@ -86,8 +84,6 @@ class Window(tk.Tk):
             self, text="edit/view materials in that course", font=("Courier New", 15)
         )
         self.course_body_label.grid(row=16, column=1, columnspan=2)
-
-
 
         # adding a little menu on top
         self.menubar = tk.Menu(self)
@@ -134,9 +130,7 @@ class Window(tk.Tk):
     def view_course(self):
         """open specified course viewer"""
         # this will open a blank page if no course is selected (bug)
-      
+
         course_n = self.list_box.get(tk.ANCHOR)
         self.destroy()
         self = cv.course_viewer(course_n)
-     
-       

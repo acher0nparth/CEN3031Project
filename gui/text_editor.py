@@ -146,28 +146,26 @@ class text_editor(tk.Tk):
         )
         continue_work.pack(side=tk.RIGHT)
 
-    
     def save_note(self):
         text = self.text_entry.get("1.0", "end")
         html = md.markdown(text)
 
         obj = Html()
         x = obj.feed(html)
-        for i in x.find('h1'):
+        for i in x.find("h1"):
             title = i.text()
-            
-        #title = x.find('h1').text()
+
+        # title = x.find('h1').text()
 
         # only gets the title if the first heading is an h1 heading
         # temp = html.split(">")
         # if temp[0] == "<h1":
         #     temp1 = temp[1].split('<')
         # title = temp1[0] # add this
-        #print(title)
+        # print(title)
         # auto parse for single # header and save a note for each title
         # save note to database from here
         db_insert(connection, title, html)
-
 
     def save_exit(self):
         self.popup.destroy()

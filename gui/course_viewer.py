@@ -3,6 +3,7 @@ import gui.gui as gui
 import gui.text_editor as te
 import gui.note_viewer as nv
 
+
 class course_viewer(tk.Tk):
     def __init__(self, course):
         super().__init__()
@@ -85,7 +86,7 @@ class course_viewer(tk.Tk):
         self = nv.note_viewer(self.course, note)
 
     def edit_note(self):
-         # will create blank page if no note is selected
+        # will create blank page if no note is selected
         note = self.list_box.get(tk.ANCHOR)
         self.destroy()
         self = te.text_editor(self.course, note)
@@ -132,4 +133,3 @@ class course_viewer(tk.Tk):
         """view courses on main page"""
         self.destroy()
         self = gui.Window()
-
