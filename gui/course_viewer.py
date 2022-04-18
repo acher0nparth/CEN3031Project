@@ -2,7 +2,11 @@ import tkinter as tk
 import gui.gui as gui
 import gui.text_editor as te
 import gui.note_viewer as nv
+import gui.flash_card_creator as fcc
+import gui.flash_card_viewer as fcv
+import gui.flash_card_editor as fce
 from database_API import *
+
 
 class course_viewer(tk.Tk):
     def __init__(self, course):
@@ -10,7 +14,7 @@ class course_viewer(tk.Tk):
 
         self.course = course
 
-        self.title(course + " Notes and Flashcards")
+        self.title(self.course + " Notes and Flashcards")
         self.geometry(
             "%dx%d+0+0"
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
@@ -62,24 +66,66 @@ class course_viewer(tk.Tk):
                 self.list_box.insert(tk.END, nt[0])
 
         self.view_note_button = tk.Button(
-            self, text="View note", height=1, width=15, command=self.view_note
+            self, text="View Note", height=1, width=15, command=self.view_note
         )
         self.view_note_button.grid(row=4, column=1, pady=5)
 
         self.edit_note_button = tk.Button(
-            self, text="Edit note", height=1, width=15, command=self.edit_note
+            self, text="Edit Note", height=1, width=15, command=self.edit_note
         )
         self.edit_note_button.grid(row=4, column=2, pady=5)
 
         self.create_note_button = tk.Button(
-            self, text="Create new note", height=1, width=15, command=self.create_note
+            self, text="Create New Note", height=1, width=15, command=self.create_note
         )
         self.create_note_button.grid(row=5, column=1, pady=5)
 
         self.delete_note_button = tk.Button(
-            self, text="Delete note", height=1, width=15, command=self.delete_note
+            self, text="Delete Note", height=1, width=15, command=self.delete_note
         )
         self.delete_note_button.grid(row=5, column=2, pady=5)
+
+        self.create_flashcard_button = tk.Button(
+            self,
+            text="Create Flashcards",
+            height=1,
+            width=15,
+            command=self.create_flashcards,
+        )
+        self.create_flashcard_button.grid(row=6, column=1, pady=5)
+
+        self.view_flashcard_button = tk.Button(
+            self,
+            text="View Flashcards",
+            height=1,
+            width=15,
+            command=self.view_flashcards,
+        )
+        self.view_flashcard_button.grid(row=6, column=2, pady=5)
+
+        self.edit_flashcard_button = tk.Button(
+            self,
+            text="Edit Flashcards",
+            height=1,
+            width=15,
+            command=self.edit_flashcards,
+        )
+        self.edit_flashcard_button.grid(row=7, column=1, pady=5)
+
+    def create_flashcards(self):
+        course = self.course
+        self.destroy()
+        self = fcc.flash_card_creator(course)
+
+    def edit_flashcards(self):
+        course = self.course
+        self.destroy()
+        self = fce.flash_card_editor(course)
+
+    def view_flashcards(self):
+        course = self.course
+        self.destroy()
+        self = fcv.flash_card_viewer(course)
 
     def view_note(self):
         # will create blank page if no note is selected
@@ -88,7 +134,7 @@ class course_viewer(tk.Tk):
         self = nv.note_viewer(self.course, note)
 
     def edit_note(self):
-         # will create blank page if no note is selected
+        # will create blank page if no note is selected
         note = self.list_box.get(tk.ANCHOR)
         self.destroy()
         self = te.text_editor(self.course, note)
@@ -138,4 +184,3 @@ class course_viewer(tk.Tk):
         """view courses on main page"""
         self.destroy()
         self = gui.Window()
-

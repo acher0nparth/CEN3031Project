@@ -1,5 +1,6 @@
 from database_API import *
 
+
 def get_courses():
     courses = []
     temp = db_get_all_courses()

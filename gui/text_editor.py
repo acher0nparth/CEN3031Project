@@ -8,7 +8,7 @@ from database_API import *
 import markdownify
 import gui.course_viewer as cv
 from note_taking_API import *
-
+import gui.course_viewer as cv
 
 
 class text_editor(tk.Tk):
@@ -152,14 +152,14 @@ class text_editor(tk.Tk):
         )
         continue_work.pack(side=tk.RIGHT)
 
-    
     def save_note(self):
         text = self.text_entry.get("1.0", "end")
         html = md.markdown(text)
         db_update_note(self.note_title, self.course, html)
 
-
     def save_exit(self):
         self.popup.destroy()
         self.save_note()
+        course = self.course
         self.destroy()
+        self = cv.course_viewer(course)
