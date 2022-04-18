@@ -20,6 +20,7 @@ def db_create_db():
     print(connection)
     return connection.database
 
+
 def db_create_table():
     mycursor = connection.cursor()
     query = (
@@ -31,11 +32,13 @@ def db_create_table():
     mycursor.execute(query)
     connection.commit()
 
+
 def db_insert(title, course, note):
     mycursor = connection.cursor()
     query = "INSERT into notes_tb (title, course, note) VALUES (%s, %s, %s)"
     mycursor.execute(query, (title, course, note))
     connection.commit()
+
 
 def db_get_all_notes():
     query = "SELECT * from notes_tb"
@@ -43,11 +46,13 @@ def db_get_all_notes():
     mycursor.execute(query)
     return mycursor.fetchall()
 
+
 def db_get_all_course_note_titles(course):
     query = "SELECT title FROM notes_tb WHERE course = '" + course + "'"
     mycursor = connection.cursor()
     mycursor.execute(query)
     return mycursor.fetchall()
+
 
 def db_get_all_titles():
     query = "SELECT title from notes_tb"
@@ -55,11 +60,13 @@ def db_get_all_titles():
     mycursor.execute(query)
     return mycursor.fetchall()
 
+
 def db_get_all_courses():
     query = "SELECT course from notes_tb"
     mycursor = connection.cursor()
     mycursor.execute(query)
     return mycursor.fetchall()
+
 
 def db_get_note(title, course):
     query = "SELECT note FROM notes_tb WHERE title = %s AND course = %s"

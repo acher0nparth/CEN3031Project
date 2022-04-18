@@ -14,5 +14,6 @@ def test_db_get_note():
         "testing updating my first note",
     )
 
+
 def test_db_get_all_courses():
     assert db_get_all_courses() == ()
