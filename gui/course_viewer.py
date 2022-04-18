@@ -2,6 +2,7 @@ import tkinter as tk
 import gui.gui as gui
 import gui.text_editor as te
 import gui.note_viewer as nv
+from database_API import *
 
 class course_viewer(tk.Tk):
     def __init__(self, course):
@@ -55,8 +56,10 @@ class course_viewer(tk.Tk):
 
         # populate list_box with notes from specific course in the database:
         # not sure how this works quite yet
-        # "for notes in database:
-        #     self.list_box.insert(tk.END, note)"
+        nts = db_get_all_course_note_titles(self.course)
+        if nts:
+            for nt in nts:
+                self.list_box.insert(tk.END, nt[0])
 
         self.view_note_button = tk.Button(
             self, text="View note", height=1, width=15, command=self.view_note
@@ -108,7 +111,7 @@ class course_viewer(tk.Tk):
         create_button = tk.Button(
             self.popup,
             text="Create note",
-            command=self.add_to_list,
+            command=lambda: self.add_to_list(self.note_name.get(1.0, tk.END)),
         )
         # create--> add_to_list(variable)
         create_button.pack(side=tk.LEFT)
@@ -116,12 +119,15 @@ class course_viewer(tk.Tk):
         cancel_button.pack(side=tk.RIGHT)
 
     def delete_note(self):
+        note_title = self.list_box.get(tk.ANCHOR)
+        db_delete_note(note_title, self.course)
         self.list_box.delete(tk.ANCHOR)
 
-    def add_to_list(self):
+    def add_to_list(self, note_title):
         """add specified note to note list"""
 
         # adds empty note to database
+        db_insert(note_title, self.course, "")
 
         # this is necessary to show newly added notes while still in window:
         self.list_box.insert(tk.END, self.note_name.get(1.0, tk.END))

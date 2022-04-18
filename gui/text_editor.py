@@ -4,8 +4,11 @@ import tkinter as tk
 import markdown as md
 import gui.gui as gui
 import gui.note_viewer as nv
+from database_API import *
+import markdownify
 import gui.course_viewer as cv
 from note_taking_API import *
+
 
 
 class text_editor(tk.Tk):
@@ -13,7 +16,7 @@ class text_editor(tk.Tk):
         super().__init__()
 
         self.course = course
-        self.note = note
+        self.note_title = note
 
         self.title("Flashify Text Editor")
         self.geometry(
@@ -21,13 +24,15 @@ class text_editor(tk.Tk):
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
         )
 
-        # load this specific note from the database using the passed in "note" string
-
         # text entry widget
         self.text_entry = tk.scrolledtext.ScrolledText(
             self, wrap=tk.WORD, font=("Times New Roman", 15)
         )
         self.text_entry.pack(fill=tk.BOTH, expand=True)
+
+        # load this specific note from the database using the passed in "note" string
+        text = db_get_note(self.note_title, self.course)
+        self.insert_text(markdownify.markdownify(text, heading_style="ATX"))
 
         # adding a little menu on top
         self.menubar = tk.Menu(self)
@@ -61,7 +66,7 @@ class text_editor(tk.Tk):
         # saving text as html
         # save html to database, destroy this window, initialize self as note viewer window
         self.destroy()
-        self = nv.note_viewer(self.course, self.note)
+        self = nv.note_viewer(self.course, self.note_title)
 
     def view_other_note(self):
         # saving work before moving on
@@ -70,6 +75,7 @@ class text_editor(tk.Tk):
         self.popup.destroy()
         self.destroy()
         self = cv.course_viewer(self.course)
+
 
     def view_courses(self):
         # saving work before moving on
@@ -151,23 +157,7 @@ class text_editor(tk.Tk):
     def save_note(self):
         text = self.text_entry.get("1.0", "end")
         html = md.markdown(text)
-
-        obj = Html()
-        x = obj.feed(html)
-        for i in x.find('h1'):
-            title = i.text()
-            
-        #title = x.find('h1').text()
-
-        # only gets the title if the first heading is an h1 heading
-        # temp = html.split(">")
-        # if temp[0] == "<h1":
-        #     temp1 = temp[1].split('<')
-        # title = temp1[0] # add this
-        #print(title)
-        # auto parse for single # header and save a note for each title
-        # save note to database from here
-        db_insert(connection, title, html)
+        db_update_note(self.note_title, self.course, html)
 
 
     def save_exit(self):
