@@ -2,6 +2,7 @@ import gui.text_editor as te
 import gui.note_viewer as nv
 import gui.course_viewer as cv
 import tkinter as tk
+from note_taking_API import *
 
 
 class Window(tk.Tk):
@@ -55,9 +56,10 @@ class Window(tk.Tk):
         self.scrollbar.config(command=self.list_box.yview)
 
         # populate list_box with courses from database:
-        # not sure how this works quite yet
-        # "for courses in database:
-        #     self.list_box.insert(tk.END, course)"
+        courses = get_courses()
+        if courses:
+            for crs in courses:
+                self.list_box.insert(tk.END, crs[0])
 
         # list box buttons
         self.create_course_button = tk.Button(
@@ -120,10 +122,12 @@ class Window(tk.Tk):
     def add_to_list(self):
         """add specified course to course list"""
 
+        name = self.course_name.get(1.0, tk.END)
         # add course to database
+        db_insert("My First Note",  name[0:-1], "First note contents")
 
         # this is necessary to show newly added courses while still in window:
-        self.list_box.insert(tk.END, self.course_name.get(1.0, tk.END))
+        self.list_box.insert(tk.END, name[0:-1])
 
         self.popup.destroy()
 
