@@ -1,6 +1,4 @@
 from cgitb import text
-#from readline import insert_text
-#from pyquery import PyQuery
 from ehp import *
 import tkinter as tk
 import markdown as md
@@ -8,6 +6,9 @@ import gui.gui as gui
 import gui.note_viewer as nv
 from database_API import *
 import markdownify
+import gui.course_viewer as cv
+from note_taking_API import *
+
 
 
 class text_editor(tk.Tk):
@@ -73,7 +74,8 @@ class text_editor(tk.Tk):
         # add pop up window to choose course/subject
         self.popup.destroy()
         self.destroy()
-        self = nv.note_viewer(self.course, self.note_title)
+        self = cv.course_viewer(self.course)
+
 
     def view_courses(self):
         # saving work before moving on
