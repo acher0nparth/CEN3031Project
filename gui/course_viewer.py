@@ -110,7 +110,7 @@ class course_viewer(tk.Tk):
             width=15,
             command=self.edit_flashcards,
         )
-        self.edit_flashcard_button.grid(row = 7, column = 1, pady = 5)
+        self.edit_flashcard_button.grid(row=7, column=1, pady=5)
 
     def create_flashcards(self):
         course = self.course

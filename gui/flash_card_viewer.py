@@ -24,7 +24,12 @@ class flash_card_viewer(tk.Tk):
         self.answer_label = tk.Label(self, text="Answer ").grid(row=0, column=2)
 
         self.prompt_display = tk.Label(
-            self, font=("Times New Roman", 15), height=10, width=25, wraplength=250, justify=tk.CENTER
+            self,
+            font=("Times New Roman", 15),
+            height=10,
+            width=25,
+            wraplength=250,
+            justify=tk.CENTER,
         )
         self.prompt_display.grid(row=0, column=1)
         self.answer_entry = tk.scrolledtext.ScrolledText(
@@ -52,7 +57,7 @@ class flash_card_viewer(tk.Tk):
         self.prompt = "testjklf;djaskfl;jadskl;jkdasl;jfkl;asjfkl;asjfkl;asdjkfl;jasdkfl;jasdklf;jasdkl;fjkalsd;jfklasd;fjklas;jdfkla;sdjfkl;asjdfkl;ajsdkfl;ajsdkfl;ajskdlf;jaskld;fjasdkl;fjaksdl;fjkasdl;fjkasld;fjaskdl;fj"
         self.correct_answer = "test"
         self.correct_answer = self.correct_answer.lower()
-        self.prompt_display.config(text = self.prompt)
+        self.prompt_display.config(text=self.prompt)
 
     def exit(self):
         course = self.course

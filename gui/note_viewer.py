@@ -24,7 +24,6 @@ class note_viewer(tk.Tk):
         # load this specific note from the database using the passed in "note" string in html form
         self.show_html()
 
-
         self.html = ""
 
         self.menubar = tk.Menu(self)
@@ -60,10 +59,10 @@ class note_viewer(tk.Tk):
     def show_html(self):
         """load html string from mySQL database ->
         display formatted html to user with HTMLLabel"""
-        
+
         temp = db_get_note(self.note_title, self.course)
         self.html = temp
-    
+
         new_area = HTMLLabel(self, html=self.html)
         if self.html_area.winfo_ismapped():
             self.html_area.pack_forget()

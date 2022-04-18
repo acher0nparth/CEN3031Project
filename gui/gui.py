@@ -124,7 +124,7 @@ class Window(tk.Tk):
 
         name = self.course_name.get(1.0, tk.END)
         # add course to database
-        db_insert("My First Note",  name[0:-1], "First note contents")
+        db_insert("My First Note", name[0:-1], "First note contents")
 
         # this is necessary to show newly added courses while still in window:
         self.list_box.insert(tk.END, name[0:-1])

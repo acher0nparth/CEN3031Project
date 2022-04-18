@@ -11,7 +11,6 @@ from note_taking_API import *
 import gui.course_viewer as cv
 
 
-
 class text_editor(tk.Tk):
     def __init__(self, course, note):
         super().__init__()
@@ -76,7 +75,6 @@ class text_editor(tk.Tk):
         self.popup.destroy()
         self.destroy()
         self = cv.course_viewer(self.course)
-
 
     def view_courses(self):
         # saving work before moving on

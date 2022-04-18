@@ -43,11 +43,11 @@ class flash_card_editor(tk.Tk):
         )
         self.save_and_exit_button.grid(row=1, column=3, padx=5, pady=5)
 
-        #index the specific notecard
-        prompt = 'edit this' 
-        answer = 'edit this but different'
-        self.prompt_entry.insert('1.0', prompt)
-        self.answer_entry.insert('1.0', answer)
+        # index the specific notecard
+        prompt = "edit this"
+        answer = "edit this but different"
+        self.prompt_entry.insert("1.0", prompt)
+        self.answer_entry.insert("1.0", answer)
 
     def save_flash_card(self):
         """save flash card to database, overwriting previous entry"""
