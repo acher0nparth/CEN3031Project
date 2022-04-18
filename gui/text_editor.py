@@ -5,6 +5,7 @@ import markdown as md
 import gui.gui as gui
 import gui.note_viewer as nv
 from note_taking_API import *
+import gui.course_viewer as cv
 
 
 class text_editor(tk.Tk):
@@ -170,4 +171,5 @@ class text_editor(tk.Tk):
     def save_exit(self):
         self.popup.destroy()
         self.save_note()
-        self.destroy()
+        course = self.course
+        self = cv.course_viewer(course)
