@@ -144,8 +144,11 @@ class course_viewer(tk.Tk):
     def edit_flashcards(self):
         course = self.course
         answer = self.flashcard_list_box.get(tk.ANCHOR)
-        self.destroy()
-        self = fce.flash_card_editor(course, answer)
+        if (answer == ""):
+            pass
+        else:
+            self.destroy()
+            self = fce.flash_card_editor(course, answer)
 
     def view_flashcards(self):
         course = self.course
@@ -153,16 +156,20 @@ class course_viewer(tk.Tk):
         self = fcv.flash_card_viewer(course)
 
     def view_note(self):
-        # will create blank page if no note is selected
         note = self.list_box.get(tk.ANCHOR)
-        self.destroy()
-        self = nv.note_viewer(self.course, note)
+        if (note == ""):
+            pass
+        else:
+            self.destroy()
+            self = nv.note_viewer(self.course, note)
 
     def edit_note(self):
-        # will create blank page if no note is selected
         note = self.list_box.get(tk.ANCHOR)
-        self.destroy()
-        self = te.text_editor(self.course, note)
+        if (note == ""):
+            pass
+        else:
+            self.destroy()
+            self = te.text_editor(self.course, note)
 
     def create_note(self):
         """create a note"""
@@ -191,8 +198,11 @@ class course_viewer(tk.Tk):
 
     def delete_note(self):
         note_title = self.list_box.get(tk.ANCHOR)
-        db_delete_note(note_title, self.course)
-        self.list_box.delete(tk.ANCHOR)
+        if (note_title == ""):
+            pass
+        else:
+            db_delete_note(note_title, self.course)
+            self.list_box.delete(tk.ANCHOR)
 
     def add_to_list(self, note_title):
         """add specified note to note list"""
