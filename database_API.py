@@ -32,6 +32,7 @@ def db_create_table():
     mycursor.execute(query)
     connection.commit()
 
+
 def db_create_notecard_table():
     mycursor = connection.cursor()
     query = (
@@ -43,11 +44,13 @@ def db_create_notecard_table():
     mycursor.execute(query)
     connection.commit()
 
+
 def db_insert(title, course, note):
     mycursor = connection.cursor()
     query = "INSERT into notes_tb (title, course, note) VALUES (%s, %s, %s)"
     mycursor.execute(query, (title, course, note))
     connection.commit()
+
 
 def db_insert_notecards(course, prompt, answer):
     mycursor = connection.cursor()
@@ -75,6 +78,7 @@ def db_get_all_course_notecards(course):
     mycursor = connection.cursor()
     mycursor.execute(query)
     return mycursor.fetchall()
+
 
 def db_get_all_course_notecards_ans(course):
     query = "SELECT answer FROM notecards_tb WHERE course = '" + course + "'"
@@ -104,12 +108,14 @@ def db_get_note(title, course):
     mycursor.execute(query, val)
     return mycursor.fetchone()[0]
 
+
 def db_get_notecard(course, answer):
     query = "SELECT prompt FROM notecards_tb WHERE course = %s AND answer = %s"
     mycursor = connection.cursor()
     val = (course, answer)
     mycursor.execute(query, val)
     return mycursor.fetchone()[0]
+
 
 def db_update_note(title, course, note):
     mycursor = connection.cursor()
@@ -126,6 +132,7 @@ def db_delete_note(title, course):
     mycursor.execute(query, adr)
     connection.commit()
 
+
 def db_delete_notecard(course, answer):
     mycursor = connection.cursor()
     query = "DELETE FROM notecards_tb WHERE answer = %s AND course = %s"
@@ -133,11 +140,13 @@ def db_delete_notecard(course, answer):
     mycursor.execute(query, adr)
     connection.commit()
 
+
 def db_delete_course_notes(course):
     mycursor = connection.cursor()
     query = "DELETE FROM notes_tb WHERE course = '" + course + "'"
     mycursor.execute(query)
     connection.commit()
+
 
 def db_delete_course_notecards(course):
     mycursor = connection.cursor()

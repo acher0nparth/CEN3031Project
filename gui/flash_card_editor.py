@@ -53,7 +53,11 @@ class flash_card_editor(tk.Tk):
     def save_flash_card(self):
         """save flash card to database, overwriting previous entry"""
         db_delete_notecard(self.course, self.answer)
-        db_insert_notecards(self.course, self.prompt_entry.get("1.0", tk.END), self.answer_entry.get("1.0", tk.END))
+        db_insert_notecards(
+            self.course,
+            self.prompt_entry.get("1.0", tk.END),
+            self.answer_entry.get("1.0", tk.END),
+        )
 
     def save_and_exit(self):
         """save flashcard and return to course viewer"""

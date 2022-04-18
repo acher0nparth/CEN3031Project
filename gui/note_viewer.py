@@ -1,6 +1,7 @@
 from tkhtmlview import HTMLLabel
 import gui.gui as gui
 import gui.text_editor as te
+import gui.course_viewer as cv
 import tkinter as tk
 from database_API import *
 import copy
@@ -35,7 +36,12 @@ class note_viewer(tk.Tk):
         self.menubar.add_cascade(label="Edit", menu=self.editmenu)
 
         self.viewmenu = tk.Menu(self.menubar, tearoff=0)
-        self.viewmenu.add_command(label="View Courses", command=self.view_course_list)
+        self.viewmenu.add_command(
+            label="View Other Courses", command=self.view_course_list
+        )
+        self.viewmenu.add_command(
+            label="Return to Course Home", command=self.return_to_course
+        )
         self.menubar.add_cascade(label="View", menu=self.viewmenu)
 
         self.config(menu=self.menubar)
@@ -63,3 +69,9 @@ class note_viewer(tk.Tk):
         """view courses on main page"""
         self.destroy()
         self = gui.Window()
+
+    def return_to_course(self):
+        """returns user to course page"""
+        course = self.course
+        self.destroy()
+        self = cv.course_viewer(course)
