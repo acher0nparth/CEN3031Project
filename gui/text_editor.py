@@ -4,6 +4,7 @@ import tkinter as tk
 import markdown as md
 import gui.gui as gui
 import gui.note_viewer as nv
+import gui.course_viewer as cv
 from note_taking_API import *
 
 
@@ -68,7 +69,7 @@ class text_editor(tk.Tk):
         # add pop up window to choose course/subject
         self.popup.destroy()
         self.destroy()
-        self = nv.note_viewer(self.course, self.note)
+        self = cv.course_viewer(self.course)
 
     def view_courses(self):
         # saving work before moving on
