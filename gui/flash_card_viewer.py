@@ -1,6 +1,7 @@
 import gui.course_viewer as cv
 import tkinter as tk
-
+import random
+from database_API import *
 
 class flash_card_viewer(tk.Tk):
     def __init__(self, course):
@@ -54,10 +55,12 @@ class flash_card_viewer(tk.Tk):
         ).grid(row=1, column=3, padx=5, pady=5)
 
         # load in random card from this set
-        self.prompt = "testjklf;djaskfl;jadskl;jkdasl;jfkl;asjfkl;asjfkl;asdjkfl;jasdkfl;jasdklf;jasdkl;fjkalsd;jfklasd;fjklas;jdfkla;sdjfkl;asjdfkl;ajsdkfl;ajsdkfl;ajskdlf;jaskld;fjasdkl;fjaksdl;fjkasdl;fjkasld;fjaskdl;fj"
-        self.correct_answer = "test"
-        self.correct_answer = self.correct_answer.lower()
-        self.prompt_display.config(text=self.prompt)
+
+        card = self.get_random_card()
+        # self.prompt = "testjklf;djaskfl;jadskl;jkdasl;jfkl;asjfkl;asjfkl;asdjkfl;jasdkfl;jasdklf;jasdkl;fjkalsd;jfklasd;fjklas;jdfkla;sdjfkl;asjdfkl;ajsdkfl;ajsdkfl;ajskdlf;jaskld;fjasdkl;fjaksdl;fjkasdl;fjkasld;fjaskdl;fj"
+        # self.correct_answer = "test"
+        self.correct_answer = card[1][0:-1]
+        self.prompt_display.config(text=card[0][0:-1])
 
     def exit(self):
         course = self.course
@@ -107,8 +110,18 @@ class flash_card_viewer(tk.Tk):
     def next_card(self):
         # index a new card from the set
         self.popup.destroy()
-        self.prompt = "test"
-        self.correct_answer = "test"
-        self.correct_answer = self.correct_answer.lower()
-        self.prompt_display.config(text = self.prompt)
+        card = self.get_random_card()
+        self.correct_answer = card[1][0:-1]
+        self.prompt_display.config(text = card[0][0:-1])
         self.answer_entry.delete("1.0", tk.END)
+
+
+    def get_random_card(self):
+        notecards = db_get_all_course_notecards(self.course)
+        return random.choice(notecards)
+        # print(card)
+        # if notecards:
+        #     self.prompt = card[0]
+        #     self.correct_answer = card[1]
+        #return 
+

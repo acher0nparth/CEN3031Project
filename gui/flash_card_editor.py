@@ -1,12 +1,14 @@
 import gui.course_viewer as cv
 import tkinter as tk
+from database_API import *
 
 
 class flash_card_editor(tk.Tk):
-    def __init__(self, course):
+    def __init__(self, course, answer):
         super().__init__()
 
         self.course = course
+        self.answer = answer
 
         self.title(self.course + " Flashcard Editor")
         self.geometry("%dx%d+0+0" % (650, 300))
@@ -44,14 +46,14 @@ class flash_card_editor(tk.Tk):
         self.save_and_exit_button.grid(row=1, column=3, padx=5, pady=5)
 
         # index the specific notecard
-        prompt = "edit this"
-        answer = "edit this but different"
+        prompt = db_get_notecard(self.course, self.answer)
         self.prompt_entry.insert("1.0", prompt)
-        self.answer_entry.insert("1.0", answer)
+        self.answer_entry.insert("1.0", self.answer)
 
     def save_flash_card(self):
         """save flash card to database, overwriting previous entry"""
-        pass
+        db_delete_notecard(self.course, self.answer)
+        db_insert_notecards(self.course, self.prompt_entry.get("1.0", tk.END), self.answer_entry.get("1.0", tk.END))
 
     def save_and_exit(self):
         """save flashcard and return to course viewer"""

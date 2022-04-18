@@ -85,6 +85,30 @@ class course_viewer(tk.Tk):
         )
         self.delete_note_button.grid(row=5, column=2, pady=5)
 
+        self.flashcard_heading_label = tk.Label(
+            self, text="Flashcards", font=("Courier New", 15, "underline")
+        )
+        self.flashcard_heading_label.grid(row=6, column=1, columnspan=2, pady=0)
+
+        self.flashcard_frame = tk.Frame(self)
+        self.flashcard_frame.grid(row=7, column=1, columnspan=2, pady=5)
+        self.flashcard_scrollbar = tk.Scrollbar(self.flashcard_frame, orient=tk.VERTICAL)
+        self.flashcard_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.flashcard_list_box = tk.Listbox(
+            self.flashcard_frame,
+            width=50,
+            yscrollcommand=self.flashcard_scrollbar.set,
+            font=("Courier New", 10),
+        )
+        self.flashcard_list_box.pack(expand=True, fill=tk.Y)
+        self.scrollbar.config(command=self.flashcard_list_box.yview)
+
+        # populate notes_list_box with notes from specific course in the database:
+        # not sure how this works quite yet
+        flashcards = db_get_all_course_notecards_ans(self.course)
+        if flashcards:
+            for card in flashcards:
+                self.flashcard_list_box.insert(tk.END, card[0])
         self.create_flashcard_button = tk.Button(
             self,
             text="Create Flashcards",
@@ -92,16 +116,16 @@ class course_viewer(tk.Tk):
             width=15,
             command=self.create_flashcards,
         )
-        self.create_flashcard_button.grid(row=6, column=1, pady=5)
+        self.create_flashcard_button.grid(row=8, column=1, pady=5)
 
         self.view_flashcard_button = tk.Button(
             self,
-            text="View Flashcards",
+            text="Test On Flashcards",
             height=1,
             width=15,
             command=self.view_flashcards,
         )
-        self.view_flashcard_button.grid(row=6, column=2, pady=5)
+        self.view_flashcard_button.grid(row=8, column=2, pady=5)
 
         self.edit_flashcard_button = tk.Button(
             self,
@@ -110,7 +134,7 @@ class course_viewer(tk.Tk):
             width=15,
             command=self.edit_flashcards,
         )
-        self.edit_flashcard_button.grid(row=7, column=1, pady=5)
+        self.edit_flashcard_button.grid(row=9, column=1, pady=5)
 
     def create_flashcards(self):
         course = self.course
@@ -119,8 +143,12 @@ class course_viewer(tk.Tk):
 
     def edit_flashcards(self):
         course = self.course
-        self.destroy()
-        self = fce.flash_card_editor(course)
+        answer = self.flashcard_list_box.get(tk.ANCHOR)
+        if (answer == ""):
+            pass
+        else:
+            self.destroy()
+            self = fce.flash_card_editor(course, answer)
 
     def view_flashcards(self):
         course = self.course
@@ -128,16 +156,20 @@ class course_viewer(tk.Tk):
         self = fcv.flash_card_viewer(course)
 
     def view_note(self):
-        # will create blank page if no note is selected
-        note = self.notes_list_box.get(tk.ANCHOR)
-        self.destroy()
-        self = nv.note_viewer(self.course, note)
+        note = self.list_box.get(tk.ANCHOR)
+        if (note == ""):
+            pass
+        else:
+            self.destroy()
+            self = nv.note_viewer(self.course, note)
 
     def edit_note(self):
-        # will create blank page if no note is selected
-        note = self.notes_list_box.get(tk.ANCHOR)
-        self.destroy()
-        self = te.text_editor(self.course, note)
+        note = self.list_box.get(tk.ANCHOR)
+        if (note == ""):
+            pass
+        else:
+            self.destroy()
+            self = te.text_editor(self.course, note)
 
     def create_note(self):
         """create a note"""
@@ -165,9 +197,12 @@ class course_viewer(tk.Tk):
         cancel_button.pack(side=tk.RIGHT)
 
     def delete_note(self):
-        note_title = self.notes_list_box.get(tk.ANCHOR)
-        db_delete_note(note_title, self.course)
-        self.notes_list_box.delete(tk.ANCHOR)
+        note_title = self.list_box.get(tk.ANCHOR)
+        if (note_title == ""):
+            pass
+        else:
+            db_delete_note(note_title, self.course)
+            self.list_box.delete(tk.ANCHOR)
 
     def add_to_list(self, note_title):
         """add specified note to note list"""
@@ -184,3 +219,4 @@ class course_viewer(tk.Tk):
         """view courses on main page"""
         self.destroy()
         self = gui.Window()
+
