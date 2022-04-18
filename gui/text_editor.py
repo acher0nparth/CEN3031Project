@@ -6,6 +6,9 @@ import gui.gui as gui
 import gui.note_viewer as nv
 from database_API import *
 import markdownify
+import gui.course_viewer as cv
+from note_taking_API import *
+
 
 
 class text_editor(tk.Tk):
