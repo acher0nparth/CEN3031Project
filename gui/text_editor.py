@@ -161,4 +161,5 @@ class text_editor(tk.Tk):
         self.popup.destroy()
         self.save_note()
         course = self.course
+        self.destroy()
         self = cv.course_viewer(course)

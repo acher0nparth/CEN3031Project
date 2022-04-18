@@ -49,13 +49,6 @@ class note_viewer(tk.Tk):
 
         self.config(menu=self.menubar)
 
-    def display_titles(self):
-        titles = db_get_all_titles(connection)
-        return titles
-
-    def note_to_display(self, title):
-        self.show_html(self.label)
-
     def show_html(self):
         """load html string from mySQL database ->
         display formatted html to user with HTMLLabel"""

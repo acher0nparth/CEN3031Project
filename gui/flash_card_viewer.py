@@ -110,6 +110,5 @@ class flash_card_viewer(tk.Tk):
         self.prompt = "test"
         self.correct_answer = "test"
         self.correct_answer = self.correct_answer.lower()
-        self.prompt_display.delete("1.0", tk.END)
-        self.prompt_display.insert("1.0", self.prompt)
+        self.prompt_display.config(text = self.prompt)
         self.answer_entry.delete("1.0", tk.END)
