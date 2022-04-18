@@ -3,6 +3,7 @@ import tkinter as tk
 import random
 from database_API import *
 
+
 class flash_card_viewer(tk.Tk):
     def __init__(self, course):
         super().__init__()
@@ -112,9 +113,8 @@ class flash_card_viewer(tk.Tk):
         self.popup.destroy()
         card = self.get_random_card()
         self.correct_answer = card[1][0:-1]
-        self.prompt_display.config(text = card[0][0:-1])
+        self.prompt_display.config(text=card[0][0:-1])
         self.answer_entry.delete("1.0", tk.END)
-
 
     def get_random_card(self):
         notecards = db_get_all_course_notecards(self.course)
@@ -123,5 +123,4 @@ class flash_card_viewer(tk.Tk):
         # if notecards:
         #     self.prompt = card[0]
         #     self.correct_answer = card[1]
-        #return 
-
+        # return

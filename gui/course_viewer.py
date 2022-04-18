@@ -58,7 +58,7 @@ class course_viewer(tk.Tk):
         self.list_box.pack(expand=True, fill=tk.Y)
         self.scrollbar.config(command=self.list_box.yview)
 
-        # populate list_box with notes from specific course in the database:
+        # populate notes_list_box with notes from specific course in the database:
         # not sure how this works quite yet
         nts = db_get_all_course_note_titles(self.course)
         if nts:
@@ -68,17 +68,17 @@ class course_viewer(tk.Tk):
         self.view_note_button = tk.Button(
             self, text="View Note", height=1, width=15, command=self.view_note
         )
-        self.view_note_button.grid(row=4, column=1, pady=5)
+        self.view_note_button.grid(row=4, column=2, pady=5)
 
         self.edit_note_button = tk.Button(
             self, text="Edit Note", height=1, width=15, command=self.edit_note
         )
-        self.edit_note_button.grid(row=4, column=2, pady=5)
+        self.edit_note_button.grid(row=5, column=1, pady=5)
 
         self.create_note_button = tk.Button(
             self, text="Create New Note", height=1, width=15, command=self.create_note
         )
-        self.create_note_button.grid(row=5, column=1, pady=5)
+        self.create_note_button.grid(row=4, column=1, pady=5)
 
         self.delete_note_button = tk.Button(
             self, text="Delete Note", height=1, width=15, command=self.delete_note
@@ -92,7 +92,9 @@ class course_viewer(tk.Tk):
 
         self.flashcard_frame = tk.Frame(self)
         self.flashcard_frame.grid(row=7, column=1, columnspan=2, pady=5)
-        self.flashcard_scrollbar = tk.Scrollbar(self.flashcard_frame, orient=tk.VERTICAL)
+        self.flashcard_scrollbar = tk.Scrollbar(
+            self.flashcard_frame, orient=tk.VERTICAL
+        )
         self.flashcard_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.flashcard_list_box = tk.Listbox(
             self.flashcard_frame,
@@ -136,6 +138,15 @@ class course_viewer(tk.Tk):
         )
         self.edit_flashcard_button.grid(row=9, column=1, pady=5)
 
+        self.delete_flashcard_button = tk.Button(
+            self,
+            text="Delete Flashcard",
+            height=1,
+            width=15,
+            command=self.delete_flashcard,
+        )
+        self.delete_flashcard_button.grid(row=9, column=2, pady=5)
+
     def create_flashcards(self):
         course = self.course
         self.destroy()
@@ -144,7 +155,7 @@ class course_viewer(tk.Tk):
     def edit_flashcards(self):
         course = self.course
         answer = self.flashcard_list_box.get(tk.ANCHOR)
-        if (answer == ""):
+        if answer == "":
             pass
         else:
             self.destroy()
@@ -155,9 +166,17 @@ class course_viewer(tk.Tk):
         self.destroy()
         self = fcv.flash_card_viewer(course)
 
+    def delete_flashcard(self):
+        answer = self.flashcard_list_box.get(tk.ANCHOR)
+        if answer == "":
+            pass
+        else:
+            db_delete_notecard(self.course, answer)
+            self.flashcard_list_box.delete(tk.ANCHOR)
+
     def view_note(self):
         note = self.list_box.get(tk.ANCHOR)
-        if (note == ""):
+        if note == "":
             pass
         else:
             self.destroy()
@@ -165,7 +184,7 @@ class course_viewer(tk.Tk):
 
     def edit_note(self):
         note = self.list_box.get(tk.ANCHOR)
-        if (note == ""):
+        if note == "":
             pass
         else:
             self.destroy()
@@ -198,7 +217,7 @@ class course_viewer(tk.Tk):
 
     def delete_note(self):
         note_title = self.list_box.get(tk.ANCHOR)
-        if (note_title == ""):
+        if note_title == "":
             pass
         else:
             db_delete_note(note_title, self.course)
@@ -211,7 +230,7 @@ class course_viewer(tk.Tk):
         db_insert(note_title, self.course, "")
 
         # this is necessary to show newly added notes while still in window:
-        self.list_box.insert(tk.END, self.note_name.get(1.0, tk.END))
+        self.notes_list_box.insert(tk.END, self.note_name.get(1.0, tk.END))
 
         self.popup.destroy()
 
@@ -219,4 +238,3 @@ class course_viewer(tk.Tk):
         """view courses on main page"""
         self.destroy()
         self = gui.Window()
-
