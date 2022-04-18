@@ -38,15 +38,6 @@ class note_viewer(tk.Tk):
         self.viewmenu.add_command(label="View Courses", command=self.view_course_list)
         self.menubar.add_cascade(label="View", menu=self.viewmenu)
 
-        titles = self.display_titles()
-        self.notemenu = tk.Menu(self.menubar, tearoff=0)
-        for title in titles:
-            self.notemenu.add_command(
-                label=title[0], command=lambda title=title: self.show_html(title[0])
-            )
-
-        self.menubar.add_cascade(label="Notes", menu=self.notemenu)
-
         self.config(menu=self.menubar)
 
     def show_html(self):
