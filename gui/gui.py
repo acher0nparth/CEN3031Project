@@ -150,6 +150,7 @@ class Window(tk.Tk):
 
     def delete_course(self):
         #here delete course from database
+        db_delete_course(self.list_box.get(tk.ANCHOR))
         self.list_box.delete(tk.ANCHOR)
         self.popup.destroy()
 

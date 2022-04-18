@@ -8,6 +8,6 @@ def get_courses():
             courses.append(course)
     return courses
 
-def delete_course(course):
+def db_delete_course(course):
     db_delete_course_notes(course)
     db_delete_course_notecards(course)
