@@ -142,11 +142,12 @@ class Window(tk.Tk):
 
     def view_course(self):
         """open specified course viewer"""
-        # this will open a blank page if no course is selected (bug)
-
         course_n = self.list_box.get(tk.ANCHOR)
-        self.destroy()
-        self = cv.course_viewer(course_n)
+        if (course_n == ""):
+            pass
+        else:
+            self.destroy()
+            self = cv.course_viewer(course_n)
 
     def delete_course(self):
         #here delete course from database
@@ -155,15 +156,18 @@ class Window(tk.Tk):
         self.popup.destroy()
 
     def delete_course_popup(self):
-        self.popup = tk.Toplevel(self)
-        warning = tk.Label(
-            self.popup,
-            text="You are about to delete a course and all the notes and flashcards in it. Do you want to continue?",
-        )
-        warning.pack(side=tk.TOP)
-        save_exit = tk.Button(self.popup, text="Delete course", command=self.delete_course)
-        save_exit.pack(side=tk.LEFT, padx=80)
-        continue_work = tk.Button(
-            self.popup, text="Cancel", command=self.popup.destroy
-        )
-        continue_work.pack(side=tk.RIGHT, padx=80)
+        if (self.list_box.get(tk.ANCHOR) == ""):
+            pass
+        else:
+            self.popup = tk.Toplevel(self)
+            warning = tk.Label(
+                self.popup,
+                text="You are about to delete a course and all the notes and flashcards in it. Do you want to continue?",
+            )
+            warning.pack(side=tk.TOP)
+            save_exit = tk.Button(self.popup, text="Delete course", command=self.delete_course)
+            save_exit.pack(side=tk.LEFT, padx=80)
+            continue_work = tk.Button(
+                self.popup, text="Cancel", command=self.popup.destroy
+            )
+            continue_work.pack(side=tk.RIGHT, padx=80)
