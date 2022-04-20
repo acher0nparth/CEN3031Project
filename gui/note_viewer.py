@@ -17,7 +17,7 @@ class note_viewer(tk.Tk):
 
         self.title("Flashify Note Viewer")
         self.geometry(
-            "%dx%d+0+0"
+            "%dx%d+600+100"
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
         )
         self.html_area = HTMLLabel(self, html="")

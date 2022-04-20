@@ -2,6 +2,7 @@ import tkinter as tk
 import gui.gui as gui
 import gui.text_editor as te
 import gui.note_viewer as nv
+import gc
 import gui.flash_card_creator as fcc
 import gui.flash_card_viewer as fcv
 import gui.flash_card_editor as fce
@@ -16,7 +17,7 @@ class course_viewer(tk.Tk):
 
         self.title(self.course + " Notes and Flashcards")
         self.geometry(
-            "%dx%d+0+0"
+            "%dx%d+600+100"
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
         )
 
@@ -193,6 +194,7 @@ class course_viewer(tk.Tk):
     def create_note(self):
         """create a note"""
         self.popup = tk.Toplevel(self)
+        self.popup.geometry("+700+500")
         naming_label = tk.Label(
             self.popup,
             text="Name your note: ",
@@ -230,11 +232,12 @@ class course_viewer(tk.Tk):
         db_insert(note_title, self.course, "")
 
         # this is necessary to show newly added notes while still in window:
-        self.notes_list_box.insert(tk.END, self.note_name.get(1.0, tk.END))
+        self.list_box.insert(tk.END, self.note_name.get(1.0, tk.END))
 
         self.popup.destroy()
 
     def view_course_list(self):
         """view courses on main page"""
         self.destroy()
+        gc.collect()
         self = gui.Window()

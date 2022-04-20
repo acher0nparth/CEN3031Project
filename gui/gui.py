@@ -11,7 +11,7 @@ class Window(tk.Tk):
 
         self.title("Flashify")
         self.geometry(
-            "%dx%d+0+0"
+            "%dx%d+600+100"
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
         )
 
@@ -106,6 +106,7 @@ class Window(tk.Tk):
     def create_course(self):
         """create course"""
         self.popup = tk.Toplevel(self)
+        self.popup.geometry("+700+500")
         naming_label = tk.Label(
             self.popup,
             text="Name your course: ",
@@ -160,6 +161,7 @@ class Window(tk.Tk):
             pass
         else:
             self.popup = tk.Toplevel(self)
+            self.popup.geometry("+700+500")
             warning = tk.Label(
                 self.popup,
                 text="You are about to delete a course and all the notes and flashcards in it. Do you want to continue?",

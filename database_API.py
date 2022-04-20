@@ -14,9 +14,9 @@ connection = conn.connect(host="localhost", port=3306, user="root", password="fl
 
 def db_create_db():
     mycursor = connection.cursor()
-    mycursor.execute("CREATE DATABASE IF NOT EXISTS testing1_db")
+    mycursor.execute("CREATE DATABASE IF NOT EXISTS pres_db")
     print(connection)
-    connection.database = "testing1_db"
+    connection.database = "pres_db"
     print(connection)
     return connection.database
 

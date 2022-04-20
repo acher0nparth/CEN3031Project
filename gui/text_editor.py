@@ -20,7 +20,7 @@ class text_editor(tk.Tk):
 
         self.title("Flashify Text Editor")
         self.geometry(
-            "%dx%d+0+0"
+            "%dx%d+600+100"
             % (self.winfo_screenwidth() / 2.5, self.winfo_screenheight() - 300)
         )
 
@@ -86,6 +86,7 @@ class text_editor(tk.Tk):
 
     def popup_dialog_exit(self):
         self.popup = tk.Toplevel(self)
+        self.popup.geometry = "+600+100"
         warning = tk.Label(
             self.popup,
             text="You are about to exit the note taker. Please save your work.",
@@ -100,6 +101,7 @@ class text_editor(tk.Tk):
 
     def popup_dialog_view_current(self):
         self.popup = tk.Toplevel(self)
+        self.popup.geometry = "+600+100"
         warning = tk.Label(
             self.popup,
             text="You are about to exit the note taker. Please save your work.",
@@ -118,6 +120,7 @@ class text_editor(tk.Tk):
 
     def popup_dialog_view_other(self):
         self.popup = tk.Toplevel(self)
+        self.popup.geometry = "+600+100"
         warning = tk.Label(
             self.popup,
             text="You are about to exit the note taker. Please save your work.",
@@ -136,6 +139,7 @@ class text_editor(tk.Tk):
 
     def popup_dialog_view_course_list(self):
         self.popup = tk.Toplevel(self)
+        self.popup.geometry("+700+500")
         warning = tk.Label(
             self.popup,
             text="You are about to exit the note taker. Please save your work.",

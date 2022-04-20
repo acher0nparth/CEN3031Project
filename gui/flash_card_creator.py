@@ -10,7 +10,7 @@ class flash_card_creator(tk.Tk):
         self.course = course
 
         self.title(self.course + " Flashcard Creator")
-        self.geometry("%dx%d+0+0" % (650, 300))
+        self.geometry("%dx%d+600+100" % (650, 300))
 
         self.menubar = tk.Menu(self)
         self.filemenu = tk.Menu(self.menubar, tearoff=0)
