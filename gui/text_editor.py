@@ -45,10 +45,10 @@ class text_editor(tk.Tk):
             label="View Current Note", command=self.popup_dialog_view_current
         )
         self.viewmenu.add_command(
-            label="View Other Notes", command=self.popup_dialog_view_other
+            label="View Other Courses", command=self.popup_dialog_view_course_list
         )
         self.viewmenu.add_command(
-            label="View Courses", command=self.popup_dialog_view_course_list
+            label="Return to Course Home", command=self.popup_dialog_return_to_course
         )
         self.menubar.add_cascade(label="View", menu=self.viewmenu)
         self.config(menu=self.menubar)
@@ -68,7 +68,7 @@ class text_editor(tk.Tk):
         self.destroy()
         self = nv.note_viewer(self.course, self.note_title)
 
-    def view_other_note(self):
+    def return_to_course(self):
         # saving work before moving on
         self.save_note()
         # add pop up window to choose course/subject
@@ -118,7 +118,7 @@ class text_editor(tk.Tk):
         )
         continue_work.pack(side=tk.RIGHT)
 
-    def popup_dialog_view_other(self):
+    def popup_dialog_return_to_course(self):
         self.popup = tk.Toplevel(self)
         self.popup.geometry = "+600+100"
         warning = tk.Label(
@@ -129,7 +129,7 @@ class text_editor(tk.Tk):
         save_exit = tk.Button(
             self.popup,
             text="Save Current Note and View Other Note",
-            command=self.view_other_note,
+            command=self.return_to_course,
         )
         save_exit.pack(side=tk.LEFT)
         continue_work = tk.Button(
