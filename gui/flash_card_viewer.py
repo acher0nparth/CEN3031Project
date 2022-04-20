@@ -14,7 +14,7 @@ class flash_card_viewer(tk.Tk):
         self.num_correct = 0
 
         self.title(self.course + " Flashcard Viewer")
-        self.geometry("%dx%d+0+0" % (650, 300))
+        self.geometry("%dx%d+600+100" % (650, 300))
 
         self.menubar = tk.Menu(self)
         self.filemenu = tk.Menu(self.menubar, tearoff=0)
@@ -80,6 +80,7 @@ class flash_card_viewer(tk.Tk):
             self.num_correct += 1
             self.num_answers += 1
             self.popup = tk.Toplevel(self)
+            self.popup.geometry("+700+500")
             correct_msg = tk.Label(
                 self.popup,
                 text='That is correct! The answer was "' + self.correct_answer + '".',
@@ -94,6 +95,7 @@ class flash_card_viewer(tk.Tk):
         else:
             self.num_answers += 1
             self.popup = tk.Toplevel(self)
+            self.popup.geometry("+700+500")
             wrong_msg = tk.Label(
                 self.popup,
                 text='That is incorrect. The correct answer was "'

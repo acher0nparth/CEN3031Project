@@ -11,7 +11,7 @@ class flash_card_editor(tk.Tk):
         self.answer = answer
 
         self.title(self.course + " Flashcard Editor")
-        self.geometry("%dx%d+0+0" % (650, 300))
+        self.geometry("%dx%d+600+100" % (650, 300))
 
         self.menubar = tk.Menu(self)
         self.filemenu = tk.Menu(self.menubar, tearoff=0)
@@ -56,7 +56,7 @@ class flash_card_editor(tk.Tk):
         db_insert_notecards(
             self.course,
             self.prompt_entry.get("1.0", tk.END),
-            self.answer_entry.get("1.0", tk.END),
+            self.answer_entry.get("1.0", tk.END)[0:-1],
         )
 
     def save_and_exit(self):
